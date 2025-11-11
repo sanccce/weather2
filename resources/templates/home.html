@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="/style.css" />
+</head>
+
+
+<body>
+<div class="container">
+<h1>Sanccce Weather Checker</h1>
+
+    <!--- show user name ---->
+    <p th:text="'Welcome, '+ ${username} + '!'" class="welcome"></p>
+
+<!---   Date time addition -->
+<div class="date-time">
+    <span th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></span> -
+    <span th:text="${#dates.format(#dates.createNow(), 'hh:mm a')}"></span>
+    <span class="badger">GMT</span>
+</div>
+
+<!-- Loading spinner -->
+<div class="spinner" id="spinner"></div>
+
+<!--- Result -->
+<div class="text-center mb-5"
+     th:if="${result}">
+    <h2 class="display-5" th:text="${result}"></h2>
+    <p th:text="'Condition: ' + ${condition}" class="welcome"></p>
+</div>
+
+    <!---- Form processor --->
+    <form th:action="@{/weather}" method="POST" onsubmit="showSpinner()">
+        <input type="text" name="city" placeholder="Enter A City (e.g London)" required
+               th:value="${city}" autofocus/>
+        <br>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    <!--- Logout form --->
+    <form th:action="@{/logout}" method="POST">
+        <button type="submit" class="btn btn-danger btn-sm  logout-btn">
+            <i class="bi bi-box-arrow-right"></i>
+            Logout
+        </button>
+    </form>
+</div>
+
+<script th:src="@{/index.js}"></script>
+<footer class="footer">powered by sanccce.com; <span>santus.onuegbu@gmail.com</span></footer>
+</body>
+</html>
